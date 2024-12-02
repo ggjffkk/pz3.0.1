@@ -16,12 +16,10 @@ public class WorkDealing {
         System.out.print("Enter the max value of the elements: ");
         int max = scanner.nextInt();
 
-        // Генерація масиву
         int[] array = generateArray(size, min, max);
         System.out.println("Array is generated: ");
         printArray(array);
 
-        // Work Dealing
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         long startTime = System.currentTimeMillis();
         int workDealingResult = executeWorkDealing(array, executorService);
@@ -31,13 +29,11 @@ public class WorkDealing {
         executorService.shutdown();
     }
 
-    // Генерація масиву
     private static int[] generateArray(int size, int min, int max) {
         Random random = new Random();
         return random.ints(size, min, max + 1).toArray();
     }
 
-    // Друк масиву
     private static void printArray(int[] array) {
         for (int i = 0; i < array.length; i++) {
             System.out.print(array[i] + " ");
@@ -47,7 +43,6 @@ public class WorkDealing {
         System.out.println();
     }
 
-    // Реалізація Work Dealing через ExecutorService
     private static int executeWorkDealing(int[] array, ExecutorService executorService) {
         int numTasks = Runtime.getRuntime().availableProcessors();
         int chunkSize = array.length / numTasks;
