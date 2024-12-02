@@ -6,12 +6,10 @@ import java.io.UnsupportedEncodingException;
 
 public class WorkStealing {
     public static void main(String[] args) throws UnsupportedEncodingException {
-        System.setOut(new PrintStream(System.out, true, "UTF-8")); // Налаштування кодування
+        System.setOut(new PrintStream(System.out, true, "UTF-8")); 
 
         @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
-
-        // Користувацьке введення
         int size;
         int min;
         int max;
@@ -30,12 +28,10 @@ public class WorkStealing {
             }
         } while (max <= min);
 
-        // Генерація масиву
         int[] array = generateArray(size, min, max);
         System.out.println("Array is generated: ");
         printArray(array);
 
-        // Work Stealing
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         long startTime = System.currentTimeMillis();
         int forkJoinResult = forkJoinPool.invoke(new PairSumTask(array, 0, array.length));
@@ -43,13 +39,11 @@ public class WorkStealing {
         System.out.println("Work Stealing result: " + forkJoinResult + ", Time: " + forkJoinTime + " ms");
     }
 
-    // Генерація масиву
     private static int[] generateArray(int size, int min, int max) {
         Random random = new Random();
         return random.ints(size, min, max + 1).toArray();
     }
 
-    // Друк масиву
     private static void printArray(int[] array) {
         for (int i = 0; i < array.length; i++) {
             System.out.print(array[i] + " ");
@@ -59,9 +53,8 @@ public class WorkStealing {
         System.out.println();
     }
 
-    // Реалізація Work Stealing через Fork/Join
     static class PairSumTask extends RecursiveTask<Integer> {
-        private static final int THRESHOLD = 10000; // Граничний розмір задачі
+        private static final int THRESHOLD = 10000; // Граничний розмір завдання
         private int[] array;
         private int start, end;
 
